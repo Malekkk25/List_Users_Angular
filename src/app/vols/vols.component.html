@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="card shadow mb-4">
+    <div class="card-body">
+    <table class="table table-striped">
+    <tr> <th>Agence</th><th>Num Vol</th><th>Heure depart</th> <th>Destination</th> <th>etat</th> <th>Aeroport</th><th>Image</th><th>Supprimer</th><th>Modifier</th></tr>
+    <tbody *ngFor="let vol of vols">
+    <tr >
+    <td>{{vol.agence}}</td>
+    <td>{{vol.numVol}}</td>
+    <td>{{ vol.heureDepart | date: 'shortTime' }}</td>
+    <td>{{vol.destination}}</td>
+    <td ><div *ngIf="vol.etat=='atteri'" ><a class="btn btn-success" >{{vol.etat}} </a></div>
+        <div *ngIf="vol.etat=='annule'" ><a class="btn btn-danger" >{{vol.etat}} </a></div>
+        <div *ngIf="vol.etat=='a la porte dembarquement'" ><a class="btn btn-warning" >{{vol.etat}} </a></div>
+    </td>
+    <td>{{vol.aeroport.nomAir}}</td>
+    <td><img class="card-img-top img-responsive"
+        src="{{apiurl+'/image/load/'+vol.idVol}}"
+        style = "height :50px;width:100px">
+        </td>
+        
+        <td><a *ngIf="authService.isAdmin()"  class="btn btn-danger" (click)="supprimerVol(vol)">Supprimer</a></td>
+        <td><a *ngIf="authService.isAdmin()" class="btn btn-success" [routerLink]="['/updateVol',vol.idVol]">Modifier</a></td>
+    </tr>
+    </tbody>
+    
+    </table>
+    </div>
+    </div>
+    </div>
